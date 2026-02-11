@@ -47,8 +47,10 @@ p.desc{color:var(--text-dim);font-size:.95rem;margin-bottom:20px;max-width:680px
 .code-block pre{padding:16px 20px;overflow-x:auto;font-family:var(--mono);font-size:.85rem;line-height:1.75;color:var(--text)}
 .code-block code .flag{color:var(--accent)}.code-block code .val{color:var(--accent4)}.code-block code .cmt{color:var(--text-muted);font-style:italic}.code-block code .url{color:var(--accent5)}.code-block code .str{color:var(--accent3)}
 
-.popular{position:relative}
-.popular::before{content:'★ COMMONLY USED';position:absolute;top:-10px;right:16px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.06em;background:var(--hot);color:white;padding:2px 10px;border-radius:4px;z-index:2}
+.popular-wrap{position:relative;margin-top:28px;isolation:isolate}
+.popular-badge{position:absolute;top:0;right:16px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.06em;background:var(--hot);color:white;padding:3px 12px;border-radius:0 0 4px 4px;z-index:2;line-height:1.4}
+.tab-content{position:relative;z-index:3}
+.section{position:relative;z-index:1}
 
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:16px 0}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .25s;cursor:default}
@@ -213,10 +215,10 @@ yt-dlp <span class="flag">-U</span>              <span class="cmt"># Update to l
   <div class="section-header"><div class="section-icon">▶</div><h2>Basic <em>Usage</em></h2></div>
   <p class="desc">The simplest command is just <mark>yt-dlp URL</mark>. By default it downloads the best quality available.</p>
 
-  <div class="code-block popular"><div class="code-label">Download a video (best quality) <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-  <pre><code>yt-dlp <span class="url">"https://www.youtube.com/watch?v=dQw4w9WgXcQ"</span></code></pre></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download a video (best quality) <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <pre><code>yt-dlp <span class="url">"https://www.youtube.com/watch?v=dQw4w9WgXcQ"</span></code></pre></div></div>
 
-  <div class="code-block popular"><div class="code-label">List all available formats <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">List all available formats <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code>yt-dlp <span class="flag">-F</span> <span class="url">"https://www.youtube.com/watch?v=VIDEO_ID"</span>
 
 <span class="cmt"># Shows a table like:</span>
@@ -224,7 +226,7 @@ yt-dlp <span class="flag">-U</span>              <span class="cmt"># Update to l
 <span class="cmt"># 140  m4a  audio only      │  3.5MiB   128k  https  audio    mp4a.40.2</span>
 <span class="cmt"># 247  webm 1280x720   30  │ 12.3MiB   800k  https  vp9      none</span>
 <span class="cmt"># 137  mp4  1920x1080  30  │ 25.1MiB  2500k  https  avc1     none</span>
-<span class="cmt"># 313  webm 3840x2160  30  │ 95.0MiB  8000k  https  vp9      none</span></code></pre></div>
+<span class="cmt"># 313  webm 3840x2160  30  │ 95.0MiB  8000k  https  vp9      none</span></code></pre></div></div>
 
   <div class="tip"><span class="tip-icon">💡</span><div><strong>Key concept:</strong> YouTube serves video and audio as <em>separate streams</em>. yt-dlp automatically merges the best video + best audio. The <mark>-F</mark> flag shows all streams individually. Use <mark>-f</mark> (lowercase) to select specific ones.</div></div>
 
@@ -239,7 +241,7 @@ yt-dlp <span class="flag">-j</span> <span class="url">"URL"</span>            <s
   <div class="section-header"><div class="section-icon">🎞</div><h2>Formats & <em>Quality</em></h2></div>
   <p class="desc">The <mark>-f</mark> flag is your primary tool for controlling download quality. This is what you'll use most often.</p>
 
-  <div class="code-block popular"><div class="code-label">Download specific resolution <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download specific resolution <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Best video+audio up to 1080p</span>
 yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=1080]+bestaudio/best"</span> <span class="url">"URL"</span>
 
@@ -250,9 +252,9 @@ yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=720]+be
 yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=480]+bestaudio/best"</span> <span class="url">"URL"</span>
 
 <span class="cmt"># Best video+audio up to 4K (2160p)</span>
-yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=2160]+bestaudio/best"</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=2160]+bestaudio/best"</span> <span class="url">"URL"</span></code></pre></div></div>
 
-  <div class="code-block popular"><div class="code-label">Download as MP4 specifically <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download as MP4 specifically <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Best MP4 video + M4A audio (no re-encoding)</span>
 yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]"</span> <span class="url">"URL"</span>
 
@@ -260,12 +262,12 @@ yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[ext=mp4]+bestau
 yt-dlp <span class="flag">--merge-output-format</span> <span class="val">mp4</span> <span class="url">"URL"</span>
 
 <span class="cmt"># Best mp4 at max 1080p</span>
-yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]"</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]"</span> <span class="url">"URL"</span></code></pre></div></div>
 
-  <div class="code-block popular"><div class="code-label">Download by format ID <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download by format ID <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># First run -F to find the IDs, then:</span>
 yt-dlp <span class="flag">-f</span> <span class="val">137+140</span> <span class="url">"URL"</span>   <span class="cmt"># video ID 137 + audio ID 140</span>
-yt-dlp <span class="flag">-f</span> <span class="val">313+251</span> <span class="url">"URL"</span>  <span class="cmt"># 4K VP9 + Opus audio</span></code></pre></div>
+yt-dlp <span class="flag">-f</span> <span class="val">313+251</span> <span class="url">"URL"</span>  <span class="cmt"># 4K VP9 + Opus audio</span></code></pre></div></div>
 
   <h3 style="font-family:var(--serif);font-size:1.2rem;margin:28px 0 14px;">Format Selection Syntax</h3>
   <table class="ref-table">
@@ -305,7 +307,7 @@ yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[fps>=50]+bestau
   <div class="section-header"><div class="section-icon">🎵</div><h2>Audio <em>Extraction</em></h2></div>
   <p class="desc">Extract just the audio track from any video. Perfect for music, podcasts, and lectures.</p>
 
-  <div class="code-block popular"><div class="code-label">Extract audio as MP3 <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Extract audio as MP3 <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Download & convert to MP3 at best quality</span>
 yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">mp3</span> <span class="url">"URL"</span>
 
@@ -313,14 +315,14 @@ yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <sp
 yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">mp3</span> <span class="flag">--audio-quality</span> <span class="val">0</span> <span class="url">"URL"</span>
 
 <span class="cmt"># MP3 at 320kbps</span>
-yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">mp3</span> <span class="flag">--audio-quality</span> <span class="val">320K</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">mp3</span> <span class="flag">--audio-quality</span> <span class="val">320K</span> <span class="url">"URL"</span></code></pre></div></div>
 
-  <div class="code-block popular"><div class="code-label">Other audio formats <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Other audio formats <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code>yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">opus</span> <span class="url">"URL"</span>  <span class="cmt"># Opus (smallest)</span>
 yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">flac</span> <span class="url">"URL"</span>  <span class="cmt"># FLAC (lossless)</span>
 yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">m4a</span> <span class="url">"URL"</span>   <span class="cmt"># M4A / AAC</span>
 yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <span class="val">wav</span> <span class="url">"URL"</span>   <span class="cmt"># WAV (uncompressed)</span>
-yt-dlp <span class="flag">-x</span> <span class="url">"URL"</span>                       <span class="cmt"># Keep original (no conversion)</span></code></pre></div>
+yt-dlp <span class="flag">-x</span> <span class="url">"URL"</span>                       <span class="cmt"># Keep original (no conversion)</span></code></pre></div></div>
 
   <div class="tip"><span class="tip-icon">💡</span><div><strong>Pro tip:</strong> YouTube audio is usually Opus or AAC. Using <mark>--audio-format m4a</mark> or <mark>opus</mark> avoids re-encoding and keeps original quality.</div></div>
 </section>
@@ -330,7 +332,7 @@ yt-dlp <span class="flag">-x</span> <span class="url">"URL"</span>              
   <div class="section-header"><div class="section-icon">📁</div><h2>Output & <em>Naming</em></h2></div>
   <p class="desc">Control where files are saved and how they're named using the <mark>-o</mark> template system.</p>
 
-  <div class="code-block popular"><div class="code-label">Common output templates <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Common output templates <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Save to specific folder with title</span>
 yt-dlp <span class="flag">-o</span> <span class="val">"~/Downloads/%(title)s.%(ext)s"</span> <span class="url">"URL"</span>
 
@@ -344,7 +346,7 @@ yt-dlp <span class="flag">-o</span> <span class="val">"%(title)s [%(resolution)s
 yt-dlp <span class="flag">-o</span> <span class="val">"%(playlist)s/%(playlist_index)03d - %(title)s.%(ext)s"</span> <span class="url">"URL"</span>
 
 <span class="cmt"># Channel archive: channel → year → title</span>
-yt-dlp <span class="flag">-o</span> <span class="val">"%(channel)s/%(upload_date>%Y)s/%(title)s.%(ext)s"</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">-o</span> <span class="val">"%(channel)s/%(upload_date>%Y)s/%(title)s.%(ext)s"</span> <span class="url">"URL"</span></code></pre></div></div>
 
   <h3 style="font-family:var(--serif);font-size:1.2rem;margin:24px 0 12px;">Template Variables</h3>
   <table class="ref-table">
@@ -373,7 +375,7 @@ yt-dlp <span class="flag">-o</span> <span class="val">"%(channel)s/%(upload_date
 <section class="section" id="playlists">
   <div class="section-header"><div class="section-icon">📋</div><h2>Playlists & <em>Channels</em></h2></div>
 
-  <div class="code-block popular"><div class="code-label">Download playlists <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download playlists <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Full playlist</span>
 yt-dlp <span class="url">"https://www.youtube.com/playlist?list=PLxxxxxx"</span>
 
@@ -390,7 +392,7 @@ yt-dlp <span class="flag">-I</span> <span class="val">-5:</span> <span class="ur
 yt-dlp <span class="flag">-I</span> <span class="val">::2</span> <span class="url">"PLAYLIST_URL"</span>
 
 <span class="cmt"># Reverse order</span>
-yt-dlp <span class="flag">--playlist-reverse</span> <span class="url">"PLAYLIST_URL"</span></code></pre></div>
+yt-dlp <span class="flag">--playlist-reverse</span> <span class="url">"PLAYLIST_URL"</span></code></pre></div></div>
 
   <div class="code-block"><div class="code-label">Channel downloads <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># All videos from channel</span>
@@ -419,7 +421,7 @@ yt-dlp <span class="flag">--yes-playlist</span> <span class="url">"URL"</span></
 <section class="section" id="subtitles">
   <div class="section-header"><div class="section-icon">💬</div><h2>Subtitles</h2></div>
 
-  <div class="code-block popular"><div class="code-label">Download with subtitles <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download with subtitles <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># All available subs</span>
 yt-dlp <span class="flag">--write-subs</span> <span class="url">"URL"</span>
 
@@ -442,7 +444,7 @@ yt-dlp <span class="flag">--write-subs</span> <span class="flag">--skip-download
 yt-dlp <span class="flag">--list-subs</span> <span class="url">"URL"</span>
 
 <span class="cmt"># Convert subtitle format</span>
-yt-dlp <span class="flag">--write-subs</span> <span class="flag">--convert-subs</span> <span class="val">srt</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">--write-subs</span> <span class="flag">--convert-subs</span> <span class="val">srt</span> <span class="url">"URL"</span></code></pre></div></div>
 </section>
 
 <!-- AUTH -->
@@ -450,14 +452,14 @@ yt-dlp <span class="flag">--write-subs</span> <span class="flag">--convert-subs<
   <div class="section-header"><div class="section-icon">🔒</div><h2>Authentication</h2></div>
   <p class="desc">Access age-restricted, members-only, or private content.</p>
 
-  <div class="code-block popular"><div class="code-label">Browser cookies (most reliable) <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Browser cookies (most reliable) <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code>yt-dlp <span class="flag">--cookies-from-browser</span> <span class="val">chrome</span> <span class="url">"URL"</span>
 yt-dlp <span class="flag">--cookies-from-browser</span> <span class="val">firefox</span> <span class="url">"URL"</span>
 yt-dlp <span class="flag">--cookies-from-browser</span> <span class="val">edge</span> <span class="url">"URL"</span>
 yt-dlp <span class="flag">--cookies-from-browser</span> <span class="val">safari</span> <span class="url">"URL"</span>
 
 <span class="cmt"># Or use a cookies.txt file</span>
-yt-dlp <span class="flag">--cookies</span> <span class="val">cookies.txt</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">--cookies</span> <span class="val">cookies.txt</span> <span class="url">"URL"</span></code></pre></div></div>
 
   <div class="code-block"><div class="code-label">Username & password <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code>yt-dlp <span class="flag">-u</span> <span class="val">USERNAME</span> <span class="flag">-p</span> <span class="val">PASSWORD</span> <span class="url">"URL"</span></code></pre></div>
@@ -493,7 +495,7 @@ yt-dlp <span class="flag">-c</span> <span class="url">"URL"</span></code></pre><
 <section class="section" id="postprocess">
   <div class="section-header"><div class="section-icon">🔧</div><h2>Post-<em>Processing</em></h2></div>
 
-  <div class="code-block popular"><div class="code-label">Download specific time range <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download specific time range <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Download a section (requires ffmpeg)</span>
 yt-dlp <span class="flag">--download-sections</span> <span class="val">"*00:01:30-00:03:45"</span> <span class="url">"URL"</span>
 
@@ -501,7 +503,7 @@ yt-dlp <span class="flag">--download-sections</span> <span class="val">"*00:01:3
 yt-dlp <span class="flag">--download-sections</span> <span class="val">"*00:02:00-inf"</span> <span class="url">"URL"</span>
 
 <span class="cmt"># First 60 seconds</span>
-yt-dlp <span class="flag">--download-sections</span> <span class="val">"*00:00:00-00:01:00"</span> <span class="url">"URL"</span></code></pre></div>
+yt-dlp <span class="flag">--download-sections</span> <span class="val">"*00:00:00-00:01:00"</span> <span class="url">"URL"</span></code></pre></div></div>
 
   <div class="code-block"><div class="code-label">Convert & split <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Re-encode to MP4</span>
@@ -521,7 +523,7 @@ yt-dlp <span class="flag">--split-chapters</span> <span class="flag">-o</span> <
 <section class="section" id="batch">
   <div class="section-header"><div class="section-icon">📦</div><h2>Batch <em>Downloads</em></h2></div>
 
-  <div class="code-block popular"><div class="code-label">Download from URL list <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <div class="popular-wrap"><span class="popular-badge">★ COMMONLY USED</span><div class="code-block"><div class="code-label">Download from URL list <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># urls.txt — one URL per line</span>
 yt-dlp <span class="flag">-a</span> <span class="val">urls.txt</span>
 
@@ -529,7 +531,7 @@ yt-dlp <span class="flag">-a</span> <span class="val">urls.txt</span>
 yt-dlp <span class="flag">-a</span> <span class="val">urls.txt</span> <span class="flag">-f</span> <span class="val">"bestvideo[height<=1080]+bestaudio"</span>
 
 <span class="cmt"># Multiple URLs inline</span>
-yt-dlp <span class="url">"URL1"</span> <span class="url">"URL2"</span> <span class="url">"URL3"</span></code></pre></div>
+yt-dlp <span class="url">"URL1"</span> <span class="url">"URL2"</span> <span class="url">"URL3"</span></code></pre></div></div>
 
   <div class="code-block"><div class="code-label">Filter by metadata <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
   <pre><code><span class="cmt"># Only videos under 10 minutes</span>
