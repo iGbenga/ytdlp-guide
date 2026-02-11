@@ -72,7 +72,8 @@ p.desc{color:var(--text-dim);font-size:.95rem;margin-bottom:20px;max-width:680px
 .code-block code .flag{color:var(--accent)}.code-block code .val{color:var(--accent4)}.code-block code .cmt{color:var(--text-muted);font-style:italic}.code-block code .url{color:var(--accent5)}.code-block code .str{color:var(--accent3)}
 
 .popular-wrap{position:relative;margin-top:28px;isolation:isolate}
-.popular-badge{position:absolute;top:0;right:16px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.06em;background:var(--hot);color:white;padding:3px 12px;border-radius:0 0 4px 4px;z-index:2;line-height:1.4}
+.popular-badge{position:absolute;top:0;left:16px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.06em;background:var(--hot);color:white;padding:3px 12px;border-radius:0 0 4px 4px;z-index:2;line-height:1.4}
+.popular-wrap .code-label{padding-top:28px}
 .tab-content{position:relative;z-index:3}
 .section{position:relative;z-index:1}
 
@@ -167,6 +168,7 @@ mark{background:var(--accent-dim);color:var(--accent);padding:1px 5px;border-rad
   <a href="#naming"><span class="nav-icon">📁</span> Output & Naming</a>
   <a href="#playlists"><span class="nav-icon">📋</span> Playlists & Channels</a>
   <a href="#subtitles"><span class="nav-icon">💬</span> Subtitles</a>
+  <a href="#config"><span class="nav-icon">⚙️</span> Config Files</a>
   <div class="nav-label">Advanced</div>
   <a href="#auth"><span class="nav-icon">🔒</span> Authentication</a>
   <a href="#speed"><span class="nav-icon">🚀</span> Speed & Network</a>
@@ -593,29 +595,101 @@ yt-dlp <span class="flag">-x</span> <span class="flag">--audio-format</span> <sp
 <!-- CONFIG -->
 <section class="section" id="config">
   <div class="section-header"><div class="section-icon">⚙️</div><h2>Config <em>Files</em></h2></div>
-  <p class="desc">Save preferred options in a config file so you don't type them every time.</p>
+  <p class="desc">Tired of typing the same flags every time? A config file saves your preferred settings so yt-dlp uses them automatically. You create it once, and every future download uses your defaults. Here's exactly how to set it up.</p>
 
-  <div class="code-block"><div class="code-label">Config file setup <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
-  <pre><code><span class="cmt"># Config file locations:</span>
-<span class="cmt"># Linux/macOS:  ~/.config/yt-dlp/config</span>
-<span class="cmt"># Windows:      %APPDATA%\yt-dlp\config.txt</span>
+  <div class="tabs" data-group="config">
+    <button class="tab active" data-tab="cfgmac">macOS / Linux</button>
+    <button class="tab" data-tab="cfgwin">Windows</button>
+  </div>
 
-<span class="cmt"># Example config contents (one flag per line):</span>
-<span class="cmt"># --output ~/Downloads/%(title)s.%(ext)s</span>
-<span class="cmt"># --merge-output-format mp4</span>
-<span class="cmt"># --embed-metadata</span>
-<span class="cmt"># --embed-thumbnail</span>
-<span class="cmt"># --embed-subs</span>
-<span class="cmt"># --sub-langs en</span>
-<span class="cmt"># --download-archive ~/.config/yt-dlp/archive.txt</span>
-<span class="cmt"># --concurrent-fragments 4</span>
-<span class="cmt"># --restrict-filenames</span>
+  <div class="tab-content active" data-tab="cfgmac" data-group="config">
+    <div class="code-block"><div class="code-label">Step 1 — Create the config folder and file <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="cmt"># Run these two commands in Terminal, one at a time:</span>
 
-<span class="cmt"># Use custom config</span>
-yt-dlp <span class="flag">--config-location</span> <span class="val">/path/to/config.txt</span> <span class="url">"URL"</span>
+<span class="cmt"># 1. Create the config folder</span>
+mkdir -p $HOME/.config/yt-dlp
 
-<span class="cmt"># Ignore config for one run</span>
-yt-dlp <span class="flag">--ignore-config</span> <span class="url">"URL"</span></code></pre></div>
+<span class="cmt"># 2. Open the config file in the nano text editor</span>
+<span class="cmt">#    (this creates the file if it doesn't exist)</span>
+nano $HOME/.config/yt-dlp/config</code></pre></div>
+
+    <div class="tip"><span class="tip-icon">💡</span><div><strong>What is nano?</strong> It's a simple text editor that runs inside your Terminal. Once it opens, you'll see a blank screen with controls at the bottom. You can type or paste text directly into it.</div></div>
+  </div>
+
+  <div class="tab-content" data-tab="cfgwin" data-group="config">
+    <div class="code-block"><div class="code-label">Step 1 — Create the config folder and file <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><code><span class="cmt"># Run these in Command Prompt or PowerShell, one at a time:</span>
+
+<span class="cmt"># 1. Create the config folder</span>
+mkdir %APPDATA%\yt-dlp
+
+<span class="cmt"># 2. Open the config file in Notepad</span>
+<span class="cmt">#    (click "Yes" if it asks to create a new file)</span>
+notepad %APPDATA%\yt-dlp\config.txt</code></pre></div>
+  </div>
+
+  <div class="code-block"><div class="code-label">Step 2 — Paste these defaults into the editor <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <pre><code><span class="cmt"># Copy everything below and paste it into nano / Notepad.</span>
+<span class="cmt"># Remove or add lines to suit your needs.</span>
+<span class="cmt"># Lines starting with # are comments and are ignored.</span>
+
+<span class="cmt"># Save videos to your Downloads folder</span>
+--output ~/Downloads/%(title)s.%(ext)s
+
+<span class="cmt"># Always output as MP4</span>
+--merge-output-format mp4
+
+<span class="cmt"># Embed metadata (title, artist, date) into the file</span>
+--embed-metadata
+
+<span class="cmt"># Embed the video thumbnail as cover art</span>
+--embed-thumbnail
+
+<span class="cmt"># Download and embed English subtitles</span>
+--embed-subs
+--sub-langs en
+
+<span class="cmt"># Skip videos you've already downloaded</span>
+--download-archive ~/.config/yt-dlp/archive.txt
+
+<span class="cmt"># Use 4 connections for faster downloads</span>
+--concurrent-fragments 4
+
+<span class="cmt"># Remove special characters from filenames</span>
+--restrict-filenames</code></pre></div>
+
+  <div class="warn"><span class="warn-icon">⚠️</span><div><strong>Windows users:</strong> Change the <mark>~/Downloads/</mark> path to <mark>C:/Users/YourName/Downloads/</mark> and the archive path to <mark>%APPDATA%/yt-dlp/archive.txt</mark> in the config above.</div></div>
+
+  <div class="code-block"><div class="code-label">Step 3 — Save and close the file <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <pre><code><span class="cmt"># macOS/Linux (nano editor):</span>
+<span class="cmt">#   1. Press  Ctrl + X   (exit)</span>
+<span class="cmt">#   2. Press  Y           (yes, save changes)</span>
+<span class="cmt">#   3. Press  Enter       (confirm the filename)</span>
+<span class="cmt">#</span>
+<span class="cmt"># You'll see something like:</span>
+<span class="cmt">#   File Name to Write: /Users/you/.config/yt-dlp/config</span>
+<span class="cmt">#   Just press Enter — that's the correct path.</span>
+<span class="cmt">#</span>
+<span class="cmt"># Windows (Notepad):</span>
+<span class="cmt">#   Just press Ctrl + S to save, then close Notepad.</span></code></pre></div>
+
+  <div class="tip"><span class="tip-icon">💡</span><div><strong>That's it!</strong> From now on, every time you run <mark>yt-dlp "URL"</mark>, all your defaults apply automatically. No extra flags needed — just paste a URL and go.</div></div>
+
+  <div class="code-block"><div class="code-label">Step 4 — Test it and learn overrides <button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+  <pre><code><span class="cmt"># Just run this — your config defaults apply automatically:</span>
+yt-dlp <span class="url">"https://www.youtube.com/watch?v=VIDEO_ID"</span>
+
+<span class="cmt"># You can still add extra flags on top of your defaults:</span>
+yt-dlp <span class="flag">-f</span> <span class="val">"bestvideo[height<=720]+bestaudio"</span> <span class="url">"URL"</span>
+
+<span class="cmt"># Need to ignore your config for one download?</span>
+yt-dlp <span class="flag">--ignore-config</span> <span class="url">"URL"</span>
+
+<span class="cmt"># Want to use a completely different config file?</span>
+yt-dlp <span class="flag">--config-location</span> <span class="val">/path/to/other-config.txt</span> <span class="url">"URL"</span>
+
+<span class="cmt"># To edit your config later, just run the nano command again:</span>
+nano $HOME/.config/yt-dlp/config</code></pre></div>
 </section>
 
 <!-- COMMAND BUILDER -->
