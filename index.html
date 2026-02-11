@@ -6,7 +6,21 @@
 <title>yt-dlp — The Definitive Interactive Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a26;--surface3:#222233;--border:#2a2a3d;--text:#e8e8f0;--text-dim:#8888a8;--text-muted:#5a5a78;--accent:#00e5a0;--accent-dim:#00e5a020;--accent2:#6c5ce7;--accent3:#fd7272;--accent4:#fdcb6e;--accent5:#74b9ff;--hot:#ff3860;--hot-bg:#ff386015;--radius:10px;--mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;--serif:'Instrument Serif',serif}
+:root{--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a26;--surface3:#222233;--border:#2a2a3d;--text:#e8e8f0;--text-dim:#8888a8;--text-muted:#5a5a78;--accent:#00c98a;--accent-dim:#00e5a020;--accent2:#6c5ce7;--accent3:#fd7272;--accent4:#fdcb6e;--accent5:#74b9ff;--hot:#ff3860;--hot-bg:#ff386015;--radius:10px;--mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif;--serif:'Instrument Serif',serif}
+[data-theme="light"]{--bg:#f0e6d6;--surface:#e8dcc8;--surface2:#ddd0ba;--surface3:#d4c6ae;--border:#c4b49a;--text:#2a2218;--text-dim:#5c4f3a;--text-muted:#8a7b65;--accent:#00895e;--accent-dim:#00895e18;--accent2:#5a4bd6;--accent3:#d94545;--accent4:#b8860b;--accent5:#2968a8;--hot:#d92850;--hot-bg:#d9285012}
+
+.theme-toggle{position:fixed;top:20px;right:28px;z-index:200;display:flex;align-items:center;gap:0;background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:4px;cursor:pointer;transition:all .3s}
+.theme-toggle:hover{border-color:var(--accent)}
+.theme-toggle .toggle-option{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:1rem;transition:all .3s;color:var(--text-muted)}
+.theme-toggle .toggle-option.active{background:var(--accent);color:var(--bg)}
+[data-theme="light"] .hero::before{background:radial-gradient(ellipse 600px 400px at 50% 40%,#00895e15 0%,transparent 70%),radial-gradient(ellipse 300px 300px at 20% 60%,#5a4bd610 0%,transparent 70%),radial-gradient(ellipse 300px 300px at 80% 30%,#d9454510 0%,transparent 70%)}
+[data-theme="light"] ::selection{background:var(--accent);color:#fff}
+[data-theme="light"] ::-webkit-scrollbar-track{background:var(--bg)}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background:var(--border)}
+[data-theme="light"] .tip{background:#00895e12;border-color:#00895e28}
+[data-theme="light"] .warn{background:#d9454512;border-color:#d9454525}
+[data-theme="light"] mark{background:#00895e18;color:var(--accent)}
+[data-theme="light"] .back-to-top{background:var(--accent);color:#fff}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
@@ -123,6 +137,10 @@ mark{background:var(--accent-dim);color:var(--accent);padding:1px 5px;border-rad
 </style>
 </head>
 <body>
+<div class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+  <span class="toggle-option active" id="tog-dark">🌙</span>
+  <span class="toggle-option" id="tog-light">☀️</span>
+</div>
 <div class="hero">
   <div class="hero-badge"><span class="dot"></span> v2025 — Comprehensive Reference</div>
   <h1>The <span>yt-dlp</span> Guide</h1>
@@ -788,6 +806,23 @@ function filterReference(){const q=document.getElementById('ref-search').value.t
 const secs=document.querySelectorAll('.section'),navs=document.querySelectorAll('.sidebar a'),btt=document.getElementById('btt');
 function updateNav(){let cur='';secs.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});navs.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur)});btt.classList.toggle('show',window.scrollY>600)}
 window.addEventListener('scroll',updateNav,{passive:true});updateNav();buildCommand();
+// -- Theme toggle --
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')!=='light';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('tog-dark').classList.toggle('active',!isDark);
+  document.getElementById('tog-light').classList.toggle('active',isDark);
+  localStorage.setItem('ytdlp-theme',isDark?'light':'dark');
+}
+(function(){
+  const saved=localStorage.getItem('ytdlp-theme');
+  if(saved==='light'){
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('tog-dark').classList.remove('active');
+    document.getElementById('tog-light').classList.add('active');
+  }
+})();
 </script>
 </body>
 </html>
